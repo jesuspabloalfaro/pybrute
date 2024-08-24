@@ -64,12 +64,12 @@ class PyBrute():
 
 def main():
     parser = argparse.ArgumentParser(prog="py-brute", description="Requests Intruder, but Python!")
-    parser.add_argument('-s', action='store_true', help="Set SSL")
-    parser.add_argument('-n', help='Which form data name you want to fuzz')
-    parser.add_argument('-p', help='Specify the payload file')
-    parser.add_argument('-t', type=int, help='Specify the number of threads')
-    parser.add_argument('-o', help='Specify the output file')
-    parser.add_argument('-i', help='Specify the request input file')
+    parser.add_argument('--ssl', '-s', default=False, action='store_true', help="Set SSL")
+    parser.add_argument('--form-name', '-n', required=True, help='Which form data name you want to fuzz')
+    parser.add_argument('--payload-file', '-p', required=True, help='Specify the payload file')
+    parser.add_argument('--threads', '-t', default=3, required=True, type=int, help='Specify the number of threads')
+    parser.add_argument('--output', '-o', required=True, help='Specify the output file')
+    parser.add_argument('--input', '-i', required=True, help='Specify the request input file')
 
     args = parser.parse_args()
 
