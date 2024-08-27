@@ -3,8 +3,9 @@ import logging
 import argparse
 import requests
 import threading
-from exceptions.exceptions import Exceptions
 from bruteparse import BruteParse
+from exceptions.exceptions import Exceptions
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -35,10 +36,11 @@ class PyBrute():
         files = {}
         for name in self.dispo_names:
             if (self.args.form_name == name):
-                files[name] = payload 
+                files[name] = payload
             else:
                 files[name] = ('', '', 'application/octet-stream')
-        request = requests.Request(self.req_type.upper(), self.url, files=files, headers=self.headers).prepare()
+        multipart_data = MultipartEncoder(files)
+        request = requests.Request(self.req_type.upper(), self.url, data=multipart_data, headers=self.headers).prepare()
         with requests.Session() as session:
             response = session.send(request)
         content_length = response.headers.get('Content-Length', 'Unknown')
