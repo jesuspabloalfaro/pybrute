@@ -40,7 +40,11 @@ class PyBrute():
             else:
                 files[name] = ('', '', 'application/octet-stream')
         multipart_data = MultipartEncoder(files)
-        request = requests.Request(self.req_type.upper(), self.url, data=multipart_data, headers=self.headers).prepare()
+        self.headers['Content-Type'] = multipart_data.content_type
+        request = requests.Request(self.req_type.upper(),
+                                   url=self.url,
+                                   data=multipart_data,
+                                   headers=self.headers).prepare()
         with requests.Session() as session:
             response = session.send(request)
         content_length = response.headers.get('Content-Length', 'Unknown')
