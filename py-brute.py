@@ -47,7 +47,7 @@ class PyBrute():
                                    headers=self.headers).prepare()
         with requests.Session() as session:
             response = session.send(request)
-        content_length = response.headers.get('Content-Length', 'Unknown')
+        content_length = len(response.text)
         content_text = response.text
 
         self.logger.debug(content_text)
