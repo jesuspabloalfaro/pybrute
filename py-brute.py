@@ -38,11 +38,13 @@ class PyBrute():
                 files[name] = ('filename.txt', payload, 'text/plain')
             else:
                 files[name] = ('', '', 'text/plain')
-        request = requests.Request(self.req_type.upper(), self.url, files=files).prepare()
+        request = requests.Request(self.req_type.upper(), self.url, files=files, headers=self.headers).prepare()
         with requests.Session() as session:
             response = session.send(request)
         content_length = response.headers.get('Content-Length', 'Unknown')
         content_text = response.text
+
+        self.logger.debug(content_text)
 
         return (content_length, content_text)
 
