@@ -35,7 +35,7 @@ class PyBrute():
         files = {}
         for name in self.dispo_names:
             if (self.args.form_name == name):
-                files[name] = ('', payload, 'text/plain')
+                files[name] = ('filename.txt', payload, 'text/plain')
             else:
                 files[name] = ('', '', 'text/plain')
         request = requests.Request(self.req_type.upper(), self.url, files=files).prepare()
