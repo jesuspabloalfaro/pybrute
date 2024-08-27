@@ -1,8 +1,15 @@
+import logging
 import regex as re
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    filemode='w',
+                    filename='brute.log')
 
 
 class BruteParse:
     def __init__(self, filename: str, ssl: bool) -> None:
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.filename = filename
         self.ssl = ssl
         self.req_type = ""
@@ -53,6 +60,12 @@ class BruteParse:
         self.content_type = self.headers["Content-Type"]
 
         self.content_dispo_names = self._parse_content_dispo_names(text)
+
+        self.logger.debug(f"Request Type: {self.req_type}")
+        self.logger.debug(f"URL: {self.url}")
+        self.logger.debug(f"Content-Type: {self.content_type}")
+        self.logger.debug(f"Content-Dispo-Names: {self.content_dispo_names}")
+        self.logger.debug(f"Headers: {self.headers}")
 
 
 if __name__ == "__main__":

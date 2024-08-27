@@ -1,14 +1,21 @@
 import json
+import logging
 import argparse
 import requests
 import threading
 from exceptions.exceptions import Exceptions
 from bruteparse import BruteParse
 
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    filemode='w',
+                    filename='pybrute.log')
+
 
 class PyBrute():
     def __init__(self, req_type: str, url: str, headers: dict[str: str],
                  content_type: str, dispo_names: list[str], args) -> None:
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.req_type = req_type
         self.url = url
         self.headers = headers
@@ -82,10 +89,8 @@ def main():
     parser.add_argument('--input', '-i', required=True, help='Specify the request input file')
 
     args = parser.parse_args()
-
     bp = BruteParse(args.input, args.ssl)
     bp.parse()
-
     pybrute = PyBrute(bp.req_type, bp.url, bp.headers, bp.content_type, bp.content_dispo_names, args)
     pybrute.send_request()
 
