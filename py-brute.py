@@ -35,9 +35,9 @@ class PyBrute():
         files = {}
         for name in self.dispo_names:
             if (self.args.form_name == name):
-                files[name] = ('filename.txt', payload, 'text/plain')
+                files[name] = payload 
             else:
-                files[name] = ('', '', 'text/plain')
+                files[name] = ('', '', 'application/octet-stream')
         request = requests.Request(self.req_type.upper(), self.url, files=files, headers=self.headers).prepare()
         with requests.Session() as session:
             response = session.send(request)
