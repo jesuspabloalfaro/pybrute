@@ -62,7 +62,7 @@ class PyBrute():
 
         with open(self.args.payload) as p:
             for payload in p:
-                thread = threading.Thread(target=self._threading_safe_request, args=(payload, semaphore,))
+                thread = threading.Thread(target=self._threading_safe_request, args=(payload.strip(), semaphore,))
                 threads.append(thread)
                 thread.start()
 
